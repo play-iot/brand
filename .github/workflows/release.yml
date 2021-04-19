@@ -1,0 +1,39 @@
+name: release-logo
+
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+
+  context:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Project context
+        id: context
+        uses: zero88/gh-project-context@v1
+
+      - name: Install
+        run: yarn install
+
+      - name: Build logo
+        run: yarn run build v${{ steps.context.outputs.version }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ needs.context.outputs.version }}
+          name: Release v${{ needs.context.outputs.version }}
+          draft: false
+          prerelease: false
+          files: |
+            dist/*.zip
+            dist/banner.txt
