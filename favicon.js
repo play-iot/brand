@@ -3,6 +3,7 @@ const fs = require("fs");
 const asyncfs = fs.promises;
 const archiver = require("archiver");
 const favicons = require("favicons");
+const pjson = require("./package.json")
 
 const version = process.argv[2];
 const source = `./design/${version}.logo.png`;
@@ -12,12 +13,12 @@ const manifest = path.join(logo, "manifest");
 const zipFile = path.join(dist, "logo.zip");
 
 const configuration = {
-  path: "/images/logo", // Path for overriding default icons path. `string`
-  appName: "QWEiO", // Your application's name. `string`
+  path: "./img/logo", // Path for overriding default icons path. `string`
+  appName: pjson.brand, // Your application's name. `string`
   appShortName: null, // Your application's short_name. `string`. Optional. If not set, appName will be used
-  appDescription: "IIoT as service", // Your application's description. `string`
-  developerName: "zero88", // Your (or your developer's) name. `string`
-  developerURL: "https://github.com/zero88", // Your (or your developer's) URL. `string`
+  appDescription: pjson.description, // Your application's description. `string`
+  developerName: pjson.author.name, // Your (or your developer's) name. `string`
+  developerURL: pjson.author.url, // Your (or your developer's) URL. `string`
   dir: "auto", // Primary text direction for name, short_name, and description
   lang: "en-US", // Primary language for name and short_name
   background: "#fff", // Background colour for flattened icons. `string`
@@ -89,7 +90,7 @@ const callback = (error, response) => {
   }
   Promise.all([
     ...response.images.map(each => asyncfs.writeFile(path.join(logo, each.name), each.contents)),
-    ...response.files.map(each => asyncfs.writeFile(path.join(manifest, each.name), each.contents)),
+    ...response.files.map(each => asyncfs.writeFile(path.join(logo, each.name), each.contents)),
     asyncfs.writeFile(path.join(manifest, "head.html"),
                       `<!DOCTYPE html><html>\n<head>\n${response.html.join("\n")}\n</head>\n</html>`),
   ])

@@ -1,8 +1,14 @@
 {
-  "name": "qweio-logo",
+  "name": "playio-logo",
+  "brand": "Play-iO",
+  "description": "Let's make IIoT more fun",
+  "homepage": "https://playio.cloud",
   "version": "1",
-  "repository": "git@github.com:qweio/logo.git",
-  "author": "zero88 <sontt246@gmail.com>",
+  "repository": "git@github.com:play-iot/logo.git",
+  "author": {
+    "name": "zero88",
+    "url": "https://github.com/zero88"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "archiver": "^5.3.0",
