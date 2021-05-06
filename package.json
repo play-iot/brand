@@ -3,7 +3,7 @@
   "brand": "Play-iO",
   "description": "Let's make IIoT more fun",
   "homepage": "https://playio.cloud",
-  "version": "1",
+  "version": "2",
   "repository": "git@github.com:play-iot/logo.git",
   "author": {
     "name": "zero88",
